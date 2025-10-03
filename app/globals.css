@@ -1,26 +1,307 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+  --status-approved-bg: #ecfdf5; /* emerald-50 */
+  --status-approved-fg: #065f46; /* emerald-800 */
+  --status-pending-bg: #fffbeb; /* amber-50 */
+  --status-pending-fg: #92400e; /* amber-800 */
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+  --status-approved-bg: #064e3b; /* emerald-900 */
+  --status-approved-fg: #a7f3d0; /* emerald-200 */
+  --status-pending-bg: #451a03; /* amber-950 */
+  --status-pending-fg: #fcd34d; /* amber-300 */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Light/Dark via data-theme attribute */
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #111827; /* gray-900 */
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --accent: #f3f4f6; /* gray-100 */
+  --accent-foreground: #111827;
+  --muted: #f9fafb; /* gray-50 */
+  --muted-foreground: #6b7280; /* gray-500 */
+  --primary: #2563eb; /* blue-600 */
+  --primary-foreground: #ffffff;
+  --elevated: #ffffff;
+  --border: #e5e7eb; /* gray-200 */
+  --ring: #2563eb;
+  --status-approved-bg: #ecfdf5; /* emerald-50 */
+  --status-approved-fg: #065f46; /* emerald-800 */
+  --status-pending-bg: #fffbeb; /* amber-50 */
+  --status-pending-fg: #92400e; /* amber-800 */
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0b1220;
+  --foreground: #e5e7eb;
+  --card: #0b1220;
+  --card-foreground: #e5e7eb;
+  --accent: #111827; /* near slate-900 */
+  --accent-foreground: #e5e7eb;
+  --muted: #0f172a; /* slate-900 */
+  --muted-foreground: #9ca3af; /* gray-400 */
+  --primary: #2563eb; /* blue-600 */
+  --primary-foreground: #ffffff;
+  --elevated: #0f172a;
+  --border: #1f2937; /* gray-800 */
+  --ring: #2563eb;
+  --status-approved-bg: #064e3b; /* emerald-900 */
+  --status-approved-fg: #a7f3d0; /* emerald-200 */
+  --status-pending-bg: #451a03; /* amber-950 */
+  --status-pending-fg: #fcd34d; /* amber-300 */
+}
+
+/* Map tokens to utility-friendly classes */
+:root {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-elevated: var(--elevated);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+}
+
+.bg-background {
+  background-color: var(--color-background);
+}
+.text-foreground {
+  color: var(--color-foreground);
+}
+.text-muted-foreground {
+  color: var(--color-muted-foreground);
+}
+.bg-elevated {
+  background-color: var(--color-elevated);
+}
+.border-border {
+  border-color: var(--color-border);
+}
+.ring-primary {
+  --tw-ring-color: var(--color-primary);
+}
+.text-primary {
+  color: var(--color-primary);
+}
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+/* Smooth transitions for theme + animations */
+* {
+  transition-property: background-color, border-color, color, fill, stroke,
+    box-shadow, transform;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  /* ensure placeholder and form text are readable in both themes */
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--muted-foreground);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 2px 8px;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
 }
+.badge-approved {
+  background-color: var(--status-approved-bg);
+  color: var(--status-approved-fg);
+}
+.badge-pending {
+  background-color: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+}
+
+/* Utility alpha variants for semantic tokens
+   These enable classes like hover:bg-primary/90 to work with our CSS variable tokens.
+   We use color-mix so the color darkens/lightens with an alpha ratio instead of global opacity. */
+.bg-primary\/90 {
+  background-color: color-mix(in oklch, var(--color-primary) 90%, transparent);
+}
+.bg-destructive\/90 {
+  background-color: color-mix(
+    in oklch,
+    var(--color-destructive) 90%,
+    transparent
+  );
+}
+.bg-secondary\/80 {
+  background-color: color-mix(
+    in oklch,
+    var(--color-secondary) 80%,
+    transparent
+  );
+}
+.bg-accent\/50 {
+  background-color: color-mix(in oklch, var(--color-accent) 50%, transparent);
+}
+/* input is used in dark:hover:bg-input/50 and similar */
+.bg-input\/50 {
+  background-color: color-mix(in oklch, var(--color-input) 50%, transparent);
+}
+
+/* Utility alpha variants for semantic tokens
+   These enable classes like hover:bg-primary/90 to work with our CSS variable tokens.
+   We use color-mix so the color darkens/lightens with an alpha ratio instead of global opacity. */
+.hover\:bg-primary\/90:hover {
+  background-color: color-mix(in oklch, var(--color-primary) 90%, transparent);
+}
+.hover\:bg-destructive\/90:hover {
+  background-color: color-mix(
+    in oklch,
+    var(--color-destructive) 90%,
+    transparent
+  );
+}
+.hover\:bg-secondary\/80:hover {
+  background-color: color-mix(
+    in oklch,
+    var(--color-secondary) 80%,
+    transparent
+  );
+}
+/* accent without slash */
+.hover\:bg-accent:hover {
+  background-color: var(--color-accent);
+}
+/* dark-prefixed hover variants */
+.dark .dark\:hover\:bg-accent\/50:hover {
+  background-color: color-mix(in oklch, var(--color-accent) 50%, transparent);
+}
+.dark .dark\:hover\:bg-input\/50:hover {
+  background-color: color-mix(in oklch, var(--color-input) 50%, transparent);
+}
+
+/* If you need more variants later, mirror this pattern:
+   .hover\:bg-<token>\/<percent>:hover { background-color: color-mix(in oklch, var(--color-<token>) <percent>%, transparent); } */
