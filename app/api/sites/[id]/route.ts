@@ -28,7 +28,7 @@ export async function PATCH(
   updates.updatedAt = new Date().toISOString();
 
   const db = await getDb();
-  const id = params.id;
+  const {id} = await params;
   if (!ObjectId.isValid(id))
     return NextResponse.json({ error: "Invalid id" }, { status: 400 });
 
@@ -47,7 +47,7 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const db = await getDb();
-  const id = params.id;
+  const {id} = await params;
   if (!ObjectId.isValid(id))
     return NextResponse.json({ error: "Invalid id" }, { status: 400 });
   await db.collection("sites").deleteOne({ _id: new ObjectId(id) });
