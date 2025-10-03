@@ -3,15 +3,6 @@ import { getDb } from "@/lib/mongodb";
 import { isAdminAuthenticated } from "@/lib/auth";
 import { ObjectId } from "mongodb";
 
-function getDomain(input: string): string {
-  try {
-    const u = new URL(input);
-    return u.hostname.replace(/^www\./, "");
-  } catch {
-    return input.replace(/^https?:\/\/(www\.)?/, "").split("/")[0];
-  }
-}
-
 async function checkUrl(url: string, timeoutMs = 30000): Promise<boolean> {
   try {
     const controller = new AbortController();
@@ -35,33 +26,6 @@ async function checkUrl(url: string, timeoutMs = 30000): Promise<boolean> {
     return false;
   }
 }
-
-// async function checkUrl(url: string): Promise<boolean> {
-//   try {
-//     const domain = getDomain(url);
-//     const response = await fetch(
-//       `https://www.isitdownrightnow.com/check.php?domain=${encodeURIComponent(
-//         domain
-//       )}`,
-//       {
-//         method: "GET",
-//         headers: {
-//           "user-agent":
-//             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
-//             "AppleWebKit/537.36 (KHTML, like Gecko) " +
-//             "Chrome/118.0.5993.70 Safari/537.36",
-//         },
-//       }
-//     );
-
-//     const html = await response.text();
-
-//     // Check if the UP icon is in the response
-//     return /<span[^>]*class=["']?upicon["']?[^>]*>UP<\/span>/i.test(html);
-//   } catch (error) {
-//     return false;
-//   }
-// }
 
 export async function POST(req: Request) {
   if (!isAdminAuthenticated()) {

@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/mongodb";
 import { isAdminAuthenticated } from "@/lib/auth";
 import { ObjectId } from "mongodb";
 
 export async function PATCH(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   if (!isAdminAuthenticated()) {
@@ -40,7 +40,7 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _req: Request,
+  _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   if (!isAdminAuthenticated()) {
