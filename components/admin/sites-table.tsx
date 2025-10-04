@@ -483,12 +483,10 @@ export function SitesTable() {
                 />
               </TableHead>
               <TableHead className="px-3 py-2">Name</TableHead>
-              <TableHead className="px-3 py-2 hidden md:table-cell">
-                URL
-              </TableHead>
+              <TableHead className="px-3 py-2 md:table-cell">URL</TableHead>
               <TableHead className="px-3 py-2">Status</TableHead>
               <TableHead className="px-3 py-2">Live</TableHead>
-              <TableHead className="px-3 py-2 hidden sm:table-cell">
+              <TableHead className="px-3 py-2 sm:table-cell">
                 Last Checked
               </TableHead>
               <TableHead className="px-3 py-2">Actions</TableHead>
@@ -514,7 +512,7 @@ export function SitesTable() {
                     {s.name}
                   </div>
                 </TableCell>
-                <TableCell className="px-3 py-2 hidden md:table-cell">
+                <TableCell className="px-3 py-2 md:table-cell">
                   <a
                     href={s.url}
                     target="_blank"
@@ -567,7 +565,7 @@ export function SitesTable() {
                     </div>
                   )}
                 </TableCell>
-                <TableCell className="px-3 py-2 hidden sm:table-cell">
+                <TableCell className="px-3 py-2 sm:table-cell">
                   <span className="tabular-nums text-muted-foreground">
                     {(s as any).lastChecked
                       ? new Date((s as any).lastChecked).toLocaleString()
