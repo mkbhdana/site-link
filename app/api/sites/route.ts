@@ -143,7 +143,7 @@ export async function POST(req: NextRequest) {
     lightLogoUrl: lightLogoUrl || null,
     darkLogoUrl: darkLogoUrl || null,
     status: normalizedStatus,
-    live: normalizedLive as const,
+    live: normalizedLive,
     lastChecked: null,
     createdAt: now,
     updatedAt: now,

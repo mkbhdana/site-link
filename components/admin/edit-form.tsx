@@ -35,35 +35,22 @@ import { toast } from "sonner";
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
   url: z.string().url("Enter a valid URL").min(1, "URL is required"),
-  logoUrl: z
-    .string()
-    .trim()
-    .optional()
-    .transform((v) => (v === "" ? undefined : v))
-    .refine((v) => !v || /^https?:\/\//i.test(v), {
-      message: "Must be http(s) URL",
-    }),
-  lightLogoUrl: z
-    .string()
-    .trim()
-    .optional()
-    .transform((v) => (v === "" ? undefined : v))
-    .refine((v) => !v || /^https?:\/\//i.test(v), {
-      message: "Must be http(s) URL",
-    }),
-  darkLogoUrl: z
-    .string()
-    .trim()
-    .optional()
-    .transform((v) => (v === "" ? undefined : v))
-    .refine((v) => !v || /^https?:\/\//i.test(v), {
-      message: "Must be http(s) URL",
-    }),
+  logoUrl: z.string().url("Must be http(s) URL").optional(),
+  lightLogoUrl: z.string().url("Must be http(s) URL").optional(),
+  darkLogoUrl: z.string().url("Must be http(s) URL").optional(),
   status: z.enum(["approved", "pending"]).default("approved"),
   live: z.enum(["up", "down"]).default("up"),
 });
 
-type FormValues = z.infer<typeof schema>;
+interface FormValues {
+  name: string;
+  url: string;
+  logoUrl?: string;
+  lightLogoUrl?: string;
+  darkLogoUrl?: string;
+  status: "approved" | "pending";
+  live: "up" | "down";
+}
 
 export function EditForm({
   initial,
@@ -80,17 +67,17 @@ export function EditForm({
     () => ({
       name: initial?.name ?? "",
       url: initial?.url ?? "",
-      logoUrl: initial?.logoUrl ?? "",
-      lightLogoUrl: initial?.lightLogoUrl ?? "",
-      darkLogoUrl: initial?.darkLogoUrl ?? "",
-      status: (initial?.status as any) ?? "approved",
-      live: (initial?.live as any) ?? "up",
+      logoUrl: initial?.logoUrl ?? undefined,
+      lightLogoUrl: initial?.lightLogoUrl ?? undefined,
+      darkLogoUrl: initial?.darkLogoUrl ?? undefined,
+      status: (initial?.status as "approved" | "pending") ?? "approved",
+      live: (initial?.live as "up" | "down") ?? "up",
     }),
     [initial]
   );
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     defaultValues,
     mode: "onChange",
   });
@@ -103,9 +90,9 @@ export function EditForm({
     const payload = {
       name: values.name,
       url: values.url,
-      logoUrl: values.logoUrl ?? null,
-      lightLogoUrl: values.lightLogoUrl ?? null,
-      darkLogoUrl: values.darkLogoUrl ?? null,
+      logoUrl: values.logoUrl || null,
+      lightLogoUrl: values.lightLogoUrl || null,
+      darkLogoUrl: values.darkLogoUrl || null,
       status: values.status,
       live: values.live,
     };
@@ -198,7 +185,12 @@ export function EditForm({
             <FormItem>
               <FormLabel>Logo URL (fallback, optional)</FormLabel>
               <FormControl>
-                <Input type="url" placeholder="Optional" {...field} />
+                <Input
+                  type="url"
+                  placeholder="Optional"
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -212,7 +204,12 @@ export function EditForm({
             <FormItem>
               <FormLabel>Light Logo URL (used in light theme)</FormLabel>
               <FormControl>
-                <Input type="url" placeholder="Optional" {...field} />
+                <Input
+                  type="url"
+                  placeholder="Optional"
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -226,14 +223,19 @@ export function EditForm({
             <FormItem>
               <FormLabel>Dark Logo URL (used in dark theme)</FormLabel>
               <FormControl>
-                <Input type="url" placeholder="Optional" {...field} />
+                <Input
+                  type="url"
+                  placeholder="Optional"
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <div className="grid sm:grid-cols-2">
+        <div className="grid sm:grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="status"
@@ -284,14 +286,11 @@ export function EditForm({
             <Button
               variant="outline"
               className="h-9 bg-transparent"
-              disabled={isPending}
+              disabled={isSubmitting}
             >
               Cancel
             </Button>
           </DialogClose>
-          {/* <Button type="submit" disabled={isPending} className="h-9">
-            {isPending ? "Saving..." : isEdit ? "Update" : "Create"}
-          </Button> */}
           <Button
             type="submit"
             className="h-9"

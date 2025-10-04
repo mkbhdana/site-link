@@ -118,7 +118,6 @@ export default function RootLayout({
               </NavigationMenuList>
             </NavigationMenu>
             {/* Theme toggle lives client-side */}
-            {/* @ts-expect-error Server Component importing client child is OK */}
             <Suspense fallback={null}>
               <ThemeToggle />
             </Suspense>

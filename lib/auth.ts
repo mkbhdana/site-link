@@ -3,8 +3,8 @@ import crypto from "crypto";
 
 const COOKIE_NAME = "admin_session";
 
-export function isAdminAuthenticated() {
-  const store = cookies();
+export async function isAdminAuthenticated() {
+  const store = await cookies();
   const token = store.get(COOKIE_NAME)?.value;
   if (!token) return false;
   const secret = process.env.ADMIN_SESSION_SECRET || "change-me";
@@ -15,8 +15,8 @@ export function isAdminAuthenticated() {
   return token === expected;
 }
 
-export function setAdminSession() {
-  const store = cookies();
+export async function setAdminSession() {
+  const store = await cookies();
   const secret = process.env.ADMIN_SESSION_SECRET || "change-me";
   const token = crypto
     .createHmac("sha256", secret)
@@ -31,7 +31,7 @@ export function setAdminSession() {
   });
 }
 
-export function clearAdminSession() {
-  const store = cookies();
+export async function clearAdminSession() {
+  const store = await cookies();
   store.delete(COOKIE_NAME);
 }
