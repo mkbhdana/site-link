@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/mongodb";
 import { isAdminAuthenticated } from "@/lib/auth";
 import { ObjectId } from "mongodb";
@@ -27,7 +27,7 @@ async function checkUrl(url: string, timeoutMs = 30000): Promise<boolean> {
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   if (!isAdminAuthenticated()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

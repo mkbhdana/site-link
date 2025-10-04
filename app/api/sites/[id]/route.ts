@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb";
 
 export async function PATCH(
   req: NextRequest,
-  context: {params: Promise<{id: string}>}
+  context: { params: Promise<{ id: string }> }
 ) {
   if (!isAdminAuthenticated()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -29,7 +29,7 @@ export async function PATCH(
 
   const db = await getDb();
   const params = context.params;
-  const id = params.id
+  const id = params.id;
   if (!ObjectId.isValid(id))
     return NextResponse.json({ error: "Invalid id" }, { status: 400 });
 
@@ -42,13 +42,14 @@ export async function PATCH(
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   if (!isAdminAuthenticated()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const db = await getDb();
-  const {id} = await params;
+  const params = context.params;
+  const id = params.id;
   if (!ObjectId.isValid(id))
     return NextResponse.json({ error: "Invalid id" }, { status: 400 });
   await db.collection("sites").deleteOne({ _id: new ObjectId(id) });

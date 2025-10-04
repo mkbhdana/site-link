@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/mongodb";
 import { isAdminAuthenticated } from "@/lib/auth";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const statusParam = searchParams.get("status"); // "approved" | "pending" | "all"
   const q = (searchParams.get("q") || "").trim();
@@ -101,7 +101,7 @@ export async function GET(req: Request) {
   );
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   if (!isAdminAuthenticated()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
